@@ -6,27 +6,29 @@ import com.zunisoft.planetrunner.actors.Bomb;
 import com.zunisoft.planetrunner.actors.Hero;
 import com.zunisoft.planetrunner.PlanetRunner;
 
-// THIS is the level 2 boss
+// THIS is the green fish enemy
 public class Enemy5 extends Enemy {
 
 	// States
-	protected static final int WALK = 1;
-	private static final int JUMP = 2;
-	private static final int ATTACKED = 3;
-	private static final int ATTACK_HERO = 4;
-	private static final int HIT_BY_BULLET = 5;
-	private static final int DIE = 6;
+	protected static final int SWIM = 1;
+	private static final int ATTACKED = 2;
+	private static final int ATTACK_HERO = 3;
+	private static final int HIT_BY_BULLET = 4;
+	private static final int DIE = 5;
 
 	protected boolean isMoveRight;
 	protected float speed = 90;  //px per sec
 	protected int state = -1;
 
 	// Enemy frames
-	protected int walkFrames[] = new int[]{0,1,2,3,2,1};
-	protected int attackedFrames[] = new int[]{4,4,4};
-	protected int attackHeroFrames[] = new int[]{4,4,4,4};
-	protected int hitByBombFrames[] = new int[]{4,4,4,4};
-	protected int dieFrame = 4;
+	protected int swimFrames[] = new int[]{0,1};
+	protected int attackedFrames[] = new int[]{2,2,2};
+	protected int attackHeroFrames[] = new int[]{2,2,2,2};
+	protected int hitByBombFrames[] = new int[]{2,2,2,2};
+	protected int dieFrame = 2;
+
+	// Enemy is in water
+	protected boolean inWater = true;
 
 	private float waitTime; // Wait time after attacked by bomb
 
@@ -36,8 +38,8 @@ public class Enemy5 extends Enemy {
 
 	public Enemy5() {
 		// Animation clip
-		clip = new Clip(PlanetRunner.atlas.findRegion("t_rex"), 146, 91);
-		setSize(72, 72);
+		clip = new Clip(PlanetRunner.atlas.findRegion("fish_green"), 60, 45);
+		setSize(60, 45);
 				
 		setClip(clip);
 		clip.setFPS(12);
@@ -54,8 +56,8 @@ public class Enemy5 extends Enemy {
 			}
 		});
 
-		health = 15;
-		score = 400;
+		noGravity = true;
+		score = 300;
 	}
 
 	@Override
@@ -63,9 +65,9 @@ public class Enemy5 extends Enemy {
 		
 		if(!hasDied) {
 			if(waitTime <= 0) {
-				// Walk
-				if(!isInAir()) {
-					chState(WALK);
+				// Swim (only state for movement)
+				if(isInWater()) {
+					chState(SWIM);
 					
 					// Set speed & flip based on direction
 					if(isMoveRight) {
@@ -76,9 +78,6 @@ public class Enemy5 extends Enemy {
 						setVX(-speed);
 					}
 					
-				} else {
-					// In air
-					chState(JUMP);
 				}
 			}
 			// Consume the wait time
@@ -169,10 +168,19 @@ public class Enemy5 extends Enemy {
 	// Die
 	@Override
 	protected void die() {
+		noGravity = false;
 		chState(DIE);
 		super.die();
 	}
 
+
+	public boolean isInWater() {
+		return inWater;
+	}
+
+	public void setInWater(boolean inWater) {
+		this.inWater = inWater;
+	}
 
 	protected void chState(int newstate) {
 		chState(newstate,false);
@@ -196,11 +204,8 @@ public class Enemy5 extends Enemy {
 			
 		// Assign the clip frames based on state
 		switch (state) {
-		case WALK:
-			clip.playFrames(walkFrames, true);
-			break;
-		case JUMP:
-			clip.singleFrame(0);
+		case SWIM:
+			clip.playFrames(swimFrames, true);
 			break;
 		case ATTACKED:
 			clip.playFrames(attackedFrames, false);

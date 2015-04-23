@@ -114,44 +114,51 @@ dodge_down
   orig: 108, 108
   offset: 0, 0
   index: -1
-flag
+fish_green
   rotate: false
   xy: 112, 112
+  size: 60, 135
+  orig: 60, 135
+  offset: 0, 0
+  index: -1
+flag
+  rotate: false
+  xy: 174, 112
   size: 96, 82
   orig: 96, 82
   offset: 0, 0
   index: -1
 fly_black
   rotate: false
-  xy: 210, 112
+  xy: 272, 112
   size: 75, 135
   orig: 75, 135
   offset: 0, 0
   index: -1
 health_bar_bar
   rotate: false
-  xy: 287, 112
+  xy: 349, 112
   size: 3, 16
   orig: 3, 16
   offset: 0, 0
   index: -1
 health_bar_face
   rotate: false
-  xy: 292, 112
+  xy: 354, 112
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 health_bar_track
   rotate: false
-  xy: 326, 112
+  xy: 388, 112
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
   index: -1
 hero
   rotate: false
-  xy: 344, 112
+  xy: 406, 112
   size: 575, 101
   orig: 575, 101
   offset: 0, 0

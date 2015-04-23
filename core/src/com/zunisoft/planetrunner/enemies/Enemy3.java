@@ -10,13 +10,11 @@ import com.zunisoft.planetrunner.PlanetRunner;
 public class Enemy3 extends Enemy {
 
 	// States
-	protected static final int WALK = 1;
-	private static final int JUMP = 2;
-	private static final int ATTACKED = 3;
-	private static final int ATTACK_HERO = 4;
-	private static final int HIT_BY_BULLET = 5;
-	private static final int DIE = 6;
-	private static final int FLY = 7;
+	protected static final int FLY = 1;
+	private static final int ATTACKED = 2;
+	private static final int ATTACK_HERO = 3;
+	private static final int HIT_BY_BULLET = 4;
+	private static final int DIE = 5;
 
 	protected boolean isMoveRight;
 	protected float speed = 175;  //px per sec
@@ -24,7 +22,6 @@ public class Enemy3 extends Enemy {
 
 	// Enemy frames
 	protected int flyFrames[] = new int[]{0,1};
-	protected int walkFrames[] = new int[]{0,1};
 	protected int attackedFrames[] = new int[]{2,2,2};
 	protected int attackHeroFrames[] = new int[]{2,2,2,2};
 	protected int hitByBombFrames[] = new int[]{2,2,2,2};
@@ -65,7 +62,7 @@ public class Enemy3 extends Enemy {
 		
 		if(!hasDied) {
 			if(waitTime <= 0) {
-				// Flying
+				// Flying (only state for movement)
 				if(isInAir()) {
 					chState(FLY);
 					
@@ -201,12 +198,6 @@ public class Enemy3 extends Enemy {
 		switch (state) {
 		case FLY:
 			clip.playFrames(flyFrames, true);
-			break;
-		case WALK:
-			clip.playFrames(walkFrames, true);
-			break;
-		case JUMP:
-			clip.singleFrame(0);
 			break;
 		case ATTACKED:
 			clip.playFrames(attackedFrames, false);

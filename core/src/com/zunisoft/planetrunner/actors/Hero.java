@@ -76,7 +76,6 @@ public class Hero extends Entity {
 	// Hero is not in water
 	protected boolean inWater=false;
 	
-	
 	public Hero(Level level) {
 		this.level = level;
 		
